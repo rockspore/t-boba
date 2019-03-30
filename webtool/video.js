@@ -3,11 +3,11 @@ function binEncode(data) {
     var datEncode = "";
 
     for (i=0; i < data.length; i++) {
-        binArray.push(data[i].charCodeAt(0).toString(2)); 
-    } 
+        binArray.push(data[i].charCodeAt(0).toString(2));
+    }
     for (j=0; j < binArray.length; j++) {
         var pad = padding_left(binArray[j], '0', 8);
-        datEncode += pad + ' '; 
+        datEncode += pad + ' ';
     }
     function padding_left(s, c, n) { if (! s || ! c || s.length >= n) {
         return s;
@@ -86,16 +86,15 @@ const constraints = {video: true};
         type: 'image/jpeg',
       });
       console.log(newBlob)
-
       // Making requests
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
          if (this.readyState == 4 && this.status == 200) {
              alert(this.responseText);
          }
-         console.log(this.status);
+         //console.log(this.status);
       };
-    xhttp.open("POST", "https://eastus.api.cognitive.microsoft.com/face/v1.0/detect", true);
+    xhttp.open("POST", "https://eastus.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceID=false&returnFaceLandmarks=false&returnFaceAttributes=age,gender,headPose,smile,facialHair,glasses,emotion,makeup,accessories", true);
     xhttp.setRequestHeader("Content-type", "application/octet-stream");
     xhttp.setRequestHeader("Ocp-Apim-Subscription-Key", "dd09200b03b54ab58a6ea35fd000b56d");
     xhttp.send(newBlob);
