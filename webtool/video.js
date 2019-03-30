@@ -66,6 +66,11 @@ const constraints = {video: true};
     screenshotButton.disabled = false;
     video.srcObject = stream;
   }
+  
+  const fb = document.getElementById('response');
+  const meme = document.createElement('meme')
+  meme.src = 'meme1.png'
+  fb.appendChild(meme)
 
   window.setInterval(function(){
     if (screenshotButton.disabled == false) {
@@ -90,7 +95,11 @@ const constraints = {video: true};
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
          if (this.readyState == 4 && this.status == 200) {
-             alert(this.responseText);
+             // alert(this.responseText);
+             var jobj = JSON.parse(this.responseText);
+             if (jobj.faceAttributes.emotion.happiness > 0.9) {
+                 meme.src = 'meme2.png'
+             }
          }
          //console.log(this.status);
       };
