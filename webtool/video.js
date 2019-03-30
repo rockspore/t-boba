@@ -52,6 +52,17 @@ const constraints = {video: true};
       canvas.getContext('2d').drawImage(video, 0, 0);
       // Other browsers will fall back to image/png
       img.src = canvas.toDataURL('image/webp');
+      // Making requests
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+         if (this.readyState == 4 && this.status == 200) {
+             alert(this.responseText);
+         }
+      };
+    xhttp.open("POST", "https://eastus.api.cognitive.microsoft.com/face/v1.0/detect", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.setRequestHeader("Ocp-Apim-Subscription-Key", "dd09200b03b54ab58a6ea35fd000b56d");
+    xhttp.send({"url": "https://upload.wikimedia.org/wikipedia/commons/3/37/Dagestani_man_and_woman.jpg"});
     }
   }, 5000);
 
