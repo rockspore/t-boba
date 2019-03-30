@@ -62,7 +62,7 @@ const constraints = {video: true};
     xhttp.open("POST", "https://eastus.api.cognitive.microsoft.com/face/v1.0/detect", true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.setRequestHeader("Ocp-Apim-Subscription-Key", "dd09200b03b54ab58a6ea35fd000b56d");
-    xhttp.send({"url": "https://upload.wikimedia.org/wikipedia/commons/3/37/Dagestani_man_and_woman.jpg"});
+    xhttp.send(JSON.stringigy({url: "https://upload.wikimedia.org/wikipedia/commons/3/37/Dagestani_man_and_woman.jpg"}));
     }
   }, 5000);
 
