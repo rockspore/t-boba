@@ -101,6 +101,8 @@ const constraints = {video: true};
                  console.log(jobj[0]);
                  if (jobj[0].faceAttributes.emotion.happiness > 0.9) {
                      webimg.src = 'meme2.png';
+                 } else if (jobj[0].faceAttributes.emotion.sadness > 0.4) {
+                     alert("Let's try finding a better plan or phone for your!");
                  } 
              }
          }
