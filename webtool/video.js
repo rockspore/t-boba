@@ -1,3 +1,25 @@
+function binEncode(data) {
+    var binArray = []
+    var datEncode = "";
+
+    for (i=0; i < data.length; i++) {
+        binArray.push(data[i].charCodeAt(0).toString(2)); 
+    } 
+    for (j=0; j < binArray.length; j++) {
+        var pad = padding_left(binArray[j], '0', 8);
+        datEncode += pad + ' '; 
+    }
+    function padding_left(s, c, n) { if (! s || ! c || s.length >= n) {
+        return s;
+    }
+    var max = (n - s.length)/c.length;
+    for (var i = 0; i < max; i++) {
+        s = c + s; } return s;
+    }
+    console.log(binArray);
+}
+
+
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -51,18 +73,32 @@ const constraints = {video: true};
       canvas.height = video.videoHeight;
       canvas.getContext('2d').drawImage(video, 0, 0);
       // Other browsers will fall back to image/png
-      img.src = canvas.toDataURL('image/webp');
+      imageURL = canvas.toDataURL('image/jpeg');
+      img.src = imageURL;
+
+      const byteString = atob(imageURL.split(',')[1]);
+      const ab = new ArrayBuffer(byteString.length);
+      const ia = new Uint8Array(ab);
+      for (let i = 0; i < byteString.length; i += 1) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+      const newBlob = new Blob([ab], {
+        type: 'image/jpeg',
+      });
+      console.log(newBlob)
+
       // Making requests
       var xhttp = new XMLHttpRequest();
       xhttp.onreadystatechange = function() {
          if (this.readyState == 4 && this.status == 200) {
              alert(this.responseText);
          }
+         console.log(this.status);
       };
     xhttp.open("POST", "https://eastus.api.cognitive.microsoft.com/face/v1.0/detect", true);
-    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.setRequestHeader("Content-type", "application/octet-stream");
     xhttp.setRequestHeader("Ocp-Apim-Subscription-Key", "dd09200b03b54ab58a6ea35fd000b56d");
-    xhttp.send(JSON.stringify({url: "https://upload.wikimedia.org/wikipedia/commons/3/37/Dagestani_man_and_woman.jpg"}));
+    xhttp.send(newBlob);
     }
   }, 5000);
 
